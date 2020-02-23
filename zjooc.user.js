@@ -6,7 +6,7 @@
 // @author       ColdThunder11
 // @match        *://www.zjooc.cn/ucenter/student/course/study/*/plan/detail/*
 // @grant        none
-// @supportURL   https://github.com/ColdThunder11/ZJOOCAutoPlay
+// @supportURL   https://github.com/ColdThunder11/ZJOOCAutoPlay/issues
 // @updateURL    https://github.com/ColdThunder11/ZJOOCAutoPlay/raw/master/zjooc.user.js
 // ==/UserScript==
 
