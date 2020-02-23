@@ -7,13 +7,13 @@
 // @match        *://www.zjooc.cn/ucenter/student/course/study/*/plan/detail/*
 // @grant        none
 // @supportURL   https://github.com/ColdThunder11/ZJOOCAutoPlay
-// @updateURL
+// @updateURL    https://github.com/ColdThunder11/ZJOOCAutoPlay/raw/master/zjooc.user.js
 // ==/UserScript==
 
 (function() {
     'use strict';
     var startTime=20000;//第一次脚本开始时间（毫秒），在这个时间之前需要确保完成课程选择和课程加载，否则会报错
-    var playInterval=12000;//课程播放间隔时间（毫秒），在这个时间之前需要确保完成课程加载，否则会报错
+    var playInterval=16000;//课程播放间隔时间（毫秒），在这个时间之前需要确保完成课程加载，否则会报错
     var nextVideoFunc=function(){
         var currentTag=document.getElementsByClassName("el-tabs__item is-top is-active")[1];
         while(currentTag.nextSibling!=null){
