@@ -1,29 +1,21 @@
 // ==UserScript==
-// @name         ZJOOC自动下一课
+// @name         ZJOOC自动播放
 // @namespace    https://github.com/ColdThunder11/ZJOOCAutoPlay
-// @version      0.1
-// @description  ZJOOC自动下一课
-// @author       ColdThunder11
+// @version      0.2
+// @description  ZJOOC自动播放下一课，详细使用需求见附加信息或readme.md
+// @author       ColdThunder11,00LT00
 // @match        *://www.zjooc.cn/ucenter/student/course/study/*/plan/detail/*
 // @grant        none
 // @supportURL   https://github.com/ColdThunder11/ZJOOCAutoPlay/issues
-// @updateURL    https://github.com/ColdThunder11/ZJOOCAutoPlay/raw/master/zjooc.user.js
 // ==/UserScript==
 
 (function() {
     'use strict';
     var startTime=25000;//第一次脚本开始时间（毫秒），在这个时间之前需要确保完成课程选择和课程加载，否则会报错
-    var playInterval=16000;//课程播放间隔时间（毫秒），在这个时间之前需要确保完成课程加载，否则会报错或者错误跳过
+    var playInterval=10000;//课程播放间隔时间（毫秒），在这个时间之前需要确保完成课程加载，否则会报错或者错误跳过
+    var speedIndex = 0; // 速度，0：4倍速，1：2倍速，2：1.5倍速，3：1.25倍速，4：正常，5：0.5倍速
+    var muteFlag = true; //是否静音
     var nextVideoFunc=function(){
-        var currentTag=document.getElementsByClassName("el-tabs__item is-top is-active")[1];
-        while(currentTag.nextSibling!=null){
-            currentTag=currentTag.nextSibling;
-            if(currentTag.childNodes[0].childNodes[2].innerText.substring(0,2)=="视频"){
-                currentTag.click();
-                playVideoFunc();
-                return;
-            }
-        }
         var currentClass=document.getElementsByClassName("el-menu-item is-active")[1];
         var nextClass=currentClass.nextSibling;
         if(nextClass==null){
@@ -37,15 +29,27 @@
         playVideoFunc();
     }
     var playVideoFunc=function(){
-        var currentTag=document.getElementsByClassName("el-tabs__item is-top is-active")[1];
-        if(currentTag.childNodes[0].childNodes[2].innerText.substring(0,2)!="视频"){
-            nextVideoFunc();
-            return;
+        var vidf=document.getElementsByTagName("video")[0];
+        var spd = vidf.parentElement.children[8];
+        var cbf=vidf.parentNode.childNodes[2];
+        var playLayerf=cbf.childNodes[0];
+        /*速度*/
+        spd.children[speedIndex].click();
+        /*音量*/
+        if(muteFlag){
+            cbf.children[18].click();
         }
         window.setTimeout(function(){
             var vidf=document.getElementsByTagName("video")[0];
+            var spd = vidf.parentElement.children[8];
             var cbf=vidf.parentNode.childNodes[2];
             var playLayerf=cbf.childNodes[0];
+            /*速度*/
+            spd.children[speedIndex].click();
+            /*音量*/
+            if(muteFlag){
+            cbf.children[18].click();
+        }
             playLayerf.click();
         },playInterval);
     };
@@ -59,7 +63,6 @@
         var pctime=processText.split('/');
         var ctime=pctime[0].trim();
         var etime=pctime[1].trim();
-        var currentTag=document.getElementsByClassName("el-tabs__item is-top is-active")[1];
         if(ctime==etime){
             nextVideoFunc();
             return;
