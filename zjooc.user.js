@@ -67,26 +67,31 @@
             playVideoFunc();
         }
     };
-
-    // 播放视频
-    var playVideoFunc = function() {
-        var vidf = document.getElementsByTagName("video")[0];
-        if (vidf) {
-            var spd = vidf.parentElement.children[8];
-            var cbf = vidf.parentNode.childNodes[2];
-            var playLayerf = cbf.childNodes[0];
-
-            // 设置速度
-            spd.children[speedIndex].click();
-            // 设置静音
-            if (muteFlag) {
-                cbf.children[18].click();
-            }
-            playLayerf.click();
-        } else {
-            // 如果没有视频，直接跳转到下一个 tab
-            window.setTimeout(nextTabFunc, playInterval);
+    
+    var playVideoFunc=function(){
+        var vidf=document.getElementsByTagName("video")[0];
+        var spd = vidf.parentElement.children[8];
+        var cbf=vidf.parentNode.childNodes[2];
+        var playLayerf=cbf.childNodes[0];
+        /*速度*/
+        spd.children[speedIndex].click();
+        /*音量*/
+        if(muteFlag){
+            cbf.children[18].click();
         }
+        window.setTimeout(function(){
+            var vidf=document.getElementsByTagName("video")[0];
+            var spd = vidf.parentElement.children[8];
+            var cbf=vidf.parentNode.childNodes[2];
+            var playLayerf=cbf.childNodes[0];
+            /*速度*/
+            spd.children[speedIndex].click();
+            /*音量*/
+            if(muteFlag){
+            cbf.children[18].click();
+        }
+            playLayerf.click();
+        },playInterval);
     };
 
     // 检查当前 tab 的内容是否完成
